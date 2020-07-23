@@ -1,0 +1,17 @@
+{
+  "name": "front_end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -p 81"
+  },
+  "author": "",
+  "license": "WTFPL",
+  "private": true,
+  "workspaces": ["base", "lib", "common", "app"]
+}

@@ -1,0 +1,3 @@
+jar {
+    archiveName "project-base.jar"
+}

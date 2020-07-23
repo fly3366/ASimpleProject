@@ -1,9 +1,7 @@
-# ASimpleProject
 
-DICT:
 
 project
- - env
+ - eenv
   - front_end
     - base
     - lib

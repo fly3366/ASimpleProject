@@ -1,0 +1,14 @@
+compileJava {
+    doFirst {
+        options.compilerArgs << '--module-path' << classpath.asPath
+    }
+    options.compilerArgs << '--add-modules' << [
+            'project.base',
+            'project.lib',
+            'project.common',
+    ].join(',')
+}
+
+jar {
+    archiveName "project-app.jar"
+}

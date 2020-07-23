@@ -1,0 +1,83 @@
+plugins {
+    id "org.beryx.jlink" version "2.15.1"
+}
+
+group 'project'
+version loadVersion()
+
+mainClassName = 'projectapp.Main'
+
+jar {
+    archiveName 'project.jar'
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    exclude 'module-info.class'
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = 11.0
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+project(':base') {
+    dependencies {
+    }
+}
+
+project(':lib') {
+    dependencies {
+        compile project(':base')
+    }
+}
+
+project(':common') {
+    dependencies {
+        compile project(':base')
+        compile project(':lib')
+    }
+}
+
+project(':app') {
+    dependencies {
+        compile project(':base')
+        compile project(':lib')
+        compile project(':common')
+    }
+}
+
+dependencies {
+    compile project(':app')
+}
+
+jlink {
+    launcher {
+        name = 'project'
+    }
+}
+
+def loadVersion() {
+    def PREFIX = "public static final String VERSION = \""
+    def SUFFIX = "\"; // _THE_VERSION_"
+    def ver = file(projectDir.getAbsolutePath() + "/base/src/main/java/projectbase/util/Version.java")
+    def lines = ver.getText().split("\n")
+    for (def line : lines) {
+        line = line.trim()
+        if (line.startsWith(PREFIX) && line.endsWith(SUFFIX)) {
+            return line.substring(PREFIX.length(), line.length() - SUFFIX.length())
+        }
+    }
+    return "unknown"
+}
