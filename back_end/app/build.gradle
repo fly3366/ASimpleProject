@@ -6,6 +6,13 @@ compileJava {
             'project.base',
             'project.lib',
             'project.common',
+            'spring.boot',
+            'spring.boot.autoconfigure',
+            'spring.boot.devtools',
+            'spring.web',
+            'spring.beans',
+            'lombok',
+            'org.mapstruct.processor'
     ].join(',')
 }
 
